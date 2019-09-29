@@ -1,0 +1,81 @@
+openapi: 3.0.0
+
+info:
+  title: WatherClock API
+  version: '0.1'
+
+servers:
+  - url: http://localhost:5000/api/v1/
+  
+paths:
+  /weather/:
+    post:
+      description: get weather information for date at given location
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  enum:
+                    - openweathermap
+                  description: provider for receiving weather forecast
+                api_key:
+                  type: string
+                  description: API key to access to weather forecast provider
+                lat:
+                  type: number
+                  format: float64
+                  description: latitude of location for requested forecast
+                lon:
+                  type: number
+                  format: float64
+                  description: longitude of location for requested forecast
+                units:
+                  type: string
+                  enum:
+                    - metric
+                    - imperial
+                  description: type of units
+      responses:
+        '200':
+          description: list of forecasts by date
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      description: forecast date
+                    temp_max:
+                      type: number
+                      format: float64
+                      description: max temperature for date
+                    temp_min:
+                      type: number
+                      format: float64
+                      description: min temperature for date
+                    temp_day_avg:
+                      type: number
+                      format: float64
+                      description: average day temperature for date
+                    icon:
+                      type: string
+                      description: weather icon identifier
+                      enum:
+                        - clear-sky
+                        - few-clouds
+                        - scattered-clouds
+                        - broken-clouds
+                        - shower-rain
+                        - rain
+                        - thunderstorm
+                        - snow
+                        - mist
