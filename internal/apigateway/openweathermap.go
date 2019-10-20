@@ -134,7 +134,7 @@ func openWeatherMapGetForecast(ch chan WeatherReport, r WeatherRequest, wg *sync
 			tempCount++
 		} else {
 			report.TempMax = math.Max(report.TempMax, weatherRec.Main.TempMax)
-			report.TempMin = math.Max(report.TempMin, weatherRec.Main.TempMin)
+			report.TempMin = math.Min(report.TempMin, weatherRec.Main.TempMin)
 			tempSum = tempSum + weatherRec.Main.Temp
 			tempCount++
 		}
